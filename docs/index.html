@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkBuddy 加油站每日签到｜产品介绍</title>
+<meta name="description" content="零依赖命令行工具，在终端完成 WorkBuddy 加油站每日签到与积分领取，台账默认脱敏。">
+<style>
+:root{
+  --brand:#0052D9;
+  --brand-hover:#0043B0;
+  --brand-light:#EDF3FE;
+  --text-1:#000;
+  --text-2:#666;
+  --text-3:#8C8C8C;
+  --border:#E7E7E7;
+  --bg:#FFF;
+  --bg-sub:#F7F7F7;
+  --radius:8px;
+  --max:1080px;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+  color:var(--text-2);background:var(--bg);font-size:14px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{color:var(--text-1);font-weight:600;line-height:1.35}
+code{font-family:var(--mono);font-size:13px;background:var(--bg-sub);color:var(--text-2);padding:1px 5px;border-radius:3px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+/* header */
+header{
+  position:sticky;top:0;z-index:10;background:rgba(255,255,255,.9);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--border);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:var(--text-1)}
+.logo-mark{
+  width:24px;height:24px;border-radius:6px;background:var(--brand);
+  display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700;
+}
+.nav-links{display:flex;align-items:center;gap:26px}
+.nav-links a{color:var(--text-2);font-size:14px}
+.nav-links a:hover{color:var(--brand);text-decoration:none}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 16px;
+  border-radius:6px;font-size:14px;border:1px solid var(--border);background:#fff;color:var(--text-1);
+  transition:.15s;
+}
+.btn:hover{text-decoration:none;border-color:var(--brand);color:var(--brand)}
+.btn-primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn-primary:hover{background:var(--brand-hover);border-color:var(--brand-hover);color:#fff}
+.btn-lg{height:40px;padding:0 22px}
+
+/* hero */
+.hero{padding:72px 0 56px;border-bottom:1px solid var(--border)}
+.hero .tag{
+  display:inline-block;font-size:12px;color:var(--brand);background:var(--brand-light);
+  padding:3px 10px;border-radius:12px;margin-bottom:20px;
+}
+.hero h1{font-size:38px;letter-spacing:-.5px;margin-bottom:16px}
+.hero p{font-size:16px;color:var(--text-2);max-width:640px}
+.hero-actions{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.meta{display:flex;gap:24px;margin-top:36px;flex-wrap:wrap;font-size:13px;color:var(--text-3)}
+.meta b{color:var(--text-1);font-weight:600}
+
+/* stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);
+  max-width:var(--max);margin:0 auto;border-bottom:1px solid var(--border);
+}
+.stat{background:#fff;padding:28px 24px}
+.stat:first-child{padding-left:0}
+.stat:last-child{padding-right:0}
+.stat .n{font-size:26px;font-weight:600;color:var(--text-1);letter-spacing:-.5px}
+.stat .n small{font-size:13px;font-weight:400;color:var(--text-3);margin-left:4px}
+.stat .l{font-size:12px;color:var(--text-3);margin-top:4px}
+
+/* section */
+section{padding:64px 0;border-bottom:1px solid var(--border)}
+.sec-head{margin-bottom:36px}
+.sec-num{font-family:var(--mono);font-size:12px;color:var(--brand);letter-spacing:1px;margin-bottom:10px}
+section h2{font-size:24px;margin-bottom:12px}
+.sec-head p{max-width:680px}
+.grid{display:grid;gap:20px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.card{border:1px solid var(--border);border-radius:var(--radius);padding:24px;background:#fff}
+.card h3{font-size:15px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13px;color:var(--text-2);line-height:1.65}
+.card .ico{
+  width:28px;height:28px;border-radius:6px;background:var(--brand-light);color:var(--brand);
+  display:grid;place-items:center;font-size:13px;font-weight:600;margin-bottom:14px;
+}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;counter-reset:s}
+.step{position:relative;padding-top:18px;border-top:2px solid var(--border);counter-increment:s}
+.step::before{
+  content:counter(s,decimal-leading-zero);position:absolute;top:-9px;left:0;
+  background:#fff;padding-right:8px;font-family:var(--mono);font-size:11px;color:var(--brand);
+}
+.step h3{font-size:14px;margin-bottom:6px}
+.step p{font-size:12px;color:var(--text-2);line-height:1.6}
+
+/* code */
+.code{position:relative;background:var(--bg-sub);border:1px solid var(--border);border-radius:var(--radius);margin:16px 0}
+.code pre{overflow-x:auto;padding:18px 20px;font-family:var(--mono);font-size:13px;line-height:1.75;color:var(--text-2)}
+.code .copy{
+  position:absolute;top:10px;right:10px;font-size:12px;padding:3px 10px;
+  border:1px solid var(--border);background:#fff;border-radius:4px;color:var(--text-2);cursor:pointer;
+}
+.code .copy:hover{border-color:var(--brand);color:var(--brand)}
+.cmt{color:#9AA4B2}
+
+/* table */
+table{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0}
+th,td{text-align:left;padding:11px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+th{color:var(--text-1);font-weight:600;background:var(--bg-sub);font-size:13px}
+td code{background:#fff;border:1px solid var(--border)}
+
+/* list */
+ul.clean{list-style:none;display:grid;gap:12px}
+ul.clean li{position:relative;padding-left:18px;font-size:13px}
+ul.clean li::before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;background:var(--brand)}
+
+/* notice */
+.notice{border-left:3px solid var(--brand);background:var(--brand-light);padding:16px 20px;border-radius:0 var(--radius) var(--radius) 0;font-size:13px;color:#2A3F5F}
+.notice b{color:var(--text-1)}
+
+/* faq */
+details{border-bottom:1px solid var(--border);padding:16px 0}
+details summary{cursor:pointer;color:var(--text-1);font-size:14px;font-weight:500;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";color:var(--text-3);font-size:16px;font-weight:400}
+details[open] summary::after{content:"−"}
+details p{margin-top:10px;font-size:13px;padding-right:24px}
+
+/* footer */
+footer{padding:40px 0;font-size:13px;color:var(--text-3)}
+.foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.foot a{color:var(--text-2)}
+.foot a:hover{color:var(--brand)}
+
+@media (max-width:900px){
+  .g3{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .hero h1{font-size:30px}
+  .nav-links a:not(.btn){display:none}
+}
+@media (max-width:600px){
+  .g3,.steps{grid-template-columns:1fr}
+  .hero{padding:48px 0 40px}
+  section{padding:48px 0}
+  table{font-size:12px}
+  th,td{padding:9px 10px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo"><span class="logo-mark">W</span>WorkBuddy 加油站每日签到</div>
+    <nav class="nav-links">
+      <a href="#overview">概述</a>
+      <a href="#features">功能</a>
+      <a href="#how">原理</a>
+      <a href="#start">快速开始</a>
+      <a class="btn" href="https://github.com/Eleven1111/workbuddy-daily-checkin">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="tag">v1.1.0</span>
+    <h1>在终端完成每日签到<br>不再为积分设提醒</h1>
+    <p>零依赖命令行工具。读取本机登录态，调用官方签到接口，领取每日积分，并把结果写入脱敏台账。不需要打开客户端界面，不需要扫码，不修改客户端任何文件。</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary btn-lg" href="#start">快速开始</a>
+      <a class="btn btn-lg" href="https://github.com/Eleven1111/workbuddy-daily-checkin">查看源码</a>
+    </div>
+    <div class="meta">
+      <span><b>Node.js</b> 18 及以上</span>
+      <span><b>依赖</b> 零</span>
+      <span><b>许可证</b> MIT</span>
+      <span><b>平台</b> macOS</span>
+    </div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="n">48<small>天</small></div><div class="l">实测连续运行</div></div>
+  <div class="stat"><div class="n">0<small>次</small></div><div class="l">签到失败</div></div>
+  <div class="stat"><div class="n">14<small>个</small></div><div class="l">单元测试</div></div>
+  <div class="stat"><div class="n">3<small>个</small></div><div class="l">Node 版本覆盖 18 / 20 / 22</div></div>
+</div>
+
+<section id="overview">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">01 / 产品概述</div>
+      <h2>它是什么</h2>
+      <p>WorkBuddy 加油站每日签到是一个运行在本机的命令行工具。它把「打开客户端、进入加油站、点击签到」这组动作，收敛为一条命令或一个定时任务。</p>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <div class="ico">1</div>
+        <h3>谁需要它</h3>
+        <p>每天使用 WorkBuddy，但经常忘记签到，或希望把签到接入自动化任务的用户。</p>
+      </div>
+      <div class="card">
+        <div class="ico">2</div>
+        <h3>解决什么问题</h3>
+        <p>手动签到易遗漏；单次定时触发可能延后；平台只展示连续天数，缺少每日明细。</p>
+      </div>
+      <div class="card">
+        <div class="ico">3</div>
+        <h3>边界在哪里</h3>
+        <p>不代登录、不刷新令牌、不改写客户端文件，仅调用官方签到接口。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">02 / 功能特性</div>
+      <h2>做得少，但每件都做对</h2>
+      <p>签到链路本身不复杂。工程难点在于凭据安全、重复提交、定时漏跑与结果可追溯。</p>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <div class="ico">签</div>
+        <h3>签到与复查</h3>
+        <p>先查询状态，未签到则领取，领取后再查一次，确认积分实际到账。</p>
+      </div>
+      <div class="card">
+        <div class="ico">幂</div>
+        <h3>幂等跳过</h3>
+        <p>当天台账已有成功记录时直接跳过，不发起任何网络请求，多次触发也不重复提交。</p>
+      </div>
+      <div class="card">
+        <div class="ico">锁</div>
+        <h3>并发保护</h3>
+        <p>进程锁阻止多个定时任务同时领取；超过 10 分钟的陈旧锁自动回收。</p>
+      </div>
+      <div class="card">
+        <div class="ico">重</div>
+        <h3>失败重试</h3>
+        <p>网络异常、<code>5xx</code>、<code>429</code> 按指数退避重试。领取接口不重试 <code>5xx</code>，避免响应丢失后的重复提交。</p>
+      </div>
+      <div class="card">
+        <div class="ico">诊</div>
+        <h3>离线自检</h3>
+        <p><code>--doctor</code> 检查客户端路径、登录态、密钥链与令牌可解性，全程不联网。</p>
+      </div>
+      <div class="card">
+        <div class="ico">账</div>
+        <h3>台账与清洗</h3>
+        <p><code>--history</code> 输出每日结果与疑似漏签日期；<code>--redact-history</code> 清洗历史个人信息并自动备份。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">03 / 工作原理</div>
+      <h2>五步完成一次签到</h2>
+      <p>客户端把落盘的敏感字段做了字段级加密，因此工具需要先取密钥，再解封访问令牌。令牌只在内存中流转。</p>
+    </div>
+    <div class="steps">
+      <div class="step"><h3>取密钥</h3><p>同进程绑定 → 客户端子进程 → 用户自备，按序尝试。</p></div>
+      <div class="step"><h3>解封令牌</h3><p>AES-256-GCM 解封登录态字段，明文不落盘。</p></div>
+      <div class="step"><h3>查状态</h3><p>查询今日是否已签到，读取连续天数与累计积分。</p></div>
+      <div class="step"><h3>领取积分</h3><p>未签到时调用领取接口，随后复查一次。</p></div>
+      <div class="step"><h3>写台账</h3><p>按字段白名单写入，输出结构化结果。</p></div>
+    </div>
+    <table>
+      <thead><tr><th style="width:32%">动作</th><th style="width:14%">方法</th><th>路径</th></tr></thead>
+      <tbody>
+        <tr><td>查询签到状态</td><td><code>POST</code></td><td><code>/v2/billing/meter/checkin-activity-status</code></td></tr>
+        <tr><td>领取每日积分</td><td><code>POST</code></td><td><code>/v2/billing/meter/daily-checkin</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">04 / 快速开始</div>
+      <h2>三条命令跑起来</h2>
+      <p>无需安装依赖。确认本机已安装 WorkBuddy 桌面端并登录过一次。</p>
+    </div>
+    <div class="code">
+      <button class="copy" data-copy>复制</button>
+      <pre><code><span class="cmt"># 1. 获取代码</span>
+git clone https://github.com/Eleven1111/workbuddy-daily-checkin.git
+cd workbuddy-daily-checkin
+
+<span class="cmt"># 2. 离线自检（不联网）</span>
+node src/checkin.mjs --doctor
+
+<span class="cmt"># 3. 签到</span>
+node src/checkin.mjs --json</code></pre>
+    </div>
+    <h3 style="font-size:15px;margin:32px 0 4px">配置定时任务</h3>
+    <p style="font-size:13px">一天触发三次，配合 <code>--if-needed</code> 保证不漏签，也不重复请求。</p>
+    <div class="code">
+      <button class="copy" data-copy>复制</button>
+      <pre><code>0 6,12,22 * * * /usr/bin/node /绝对路径/src/checkin.mjs --if-needed --quiet</code></pre>
+    </div>
+    <table>
+      <thead><tr><th style="width:30%">命令</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr><td><code>--check-only</code></td><td>只查询状态，不领取</td></tr>
+        <tr><td><code>--if-needed</code></td><td>当天已成功则跳过，不发起网络请求</td></tr>
+        <tr><td><code>--doctor</code></td><td>离线自检本机环境</td></tr>
+        <tr><td><code>--history=30</code></td><td>近 30 天台账与漏签检测</td></tr>
+        <tr><td><code>--redact-history</code></td><td>清洗历史台账中的个人信息</td></tr>
+        <tr><td><code>--json</code></td><td>输出固定字段，便于自动化任务消费</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="security">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">05 / 安全说明</div>
+      <h2>凭据不进仓库，也不进日志</h2>
+    </div>
+    <div class="notice">
+      <b>默认脱敏。</b>台账只写入白名单字段：签到结果、积分、连续天数、HTTP 状态与一行结论。账号昵称、密钥标识、令牌长度、令牌有效期与原始响应一律不落盘，文件权限为 <code>0600</code>。
+    </div>
+    <ul class="clean" style="margin-top:24px">
+      <li>源码不含任何编译期密钥或真实凭据，密钥在运行时按链路获取。</li>
+      <li><code>--verbose</code> 的调试信息只写入标准输出，不写入台账。</li>
+      <li>登录态过期时直接退出并提示重新登录，不刷新、不改写凭据。</li>
+      <li>仓库内置防泄露扫描，CI 校验疑似密钥与手机号。</li>
+      <li>仅用于本人设备、本人账号；使用前请确认符合平台服务条款。</li>
+    </ul>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">06 / 常见问题</div>
+      <h2>排错入口</h2>
+    </div>
+    <details>
+      <summary>提示「无法取得 at-rest 密钥」</summary>
+      <p>客户端未安装、未登录，或运行环境没有原生模块。确认客户端已登录；或通过 <code>WB_ATREST_SECRET_B64</code>、<code>WB_SECRET_FILE</code> 自备密钥。</p>
+    </details>
+    <details>
+      <summary>提示「无法解出登录令牌」或自检显示 MISMATCH</summary>
+      <p>客户端升级后更换了加密方案或密钥。打开客户端登录一次，再执行 <code>--doctor</code> 确认。</p>
+    </details>
+    <details>
+      <summary>提示「登录态已过期」或返回 401</summary>
+      <p>会话已失效。打开客户端重新登录即可，本工具不会自行刷新令牌。</p>
+    </details>
+    <details>
+      <summary>输出「今日已签到，跳过本次请求」</summary>
+      <p><code>--if-needed</code> 生效，属正常结果。如需强制请求，添加 <code>--force</code>。</p>
+    </details>
+    <details>
+      <summary>读取登录态时报 EPERM</summary>
+      <p>命令被运行环境的沙箱拦截。以无沙箱方式重试一次。</p>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span>MIT License © 2026 Eleven1111</span>
+    <span>
+      <a href="https://github.com/Eleven1111/workbuddy-daily-checkin/blob/main/CHANGELOG.md">更新日志</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/Eleven1111/workbuddy-daily-checkin/issues">问题反馈</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/Eleven1111/workbuddy-daily-checkin">GitHub</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll("[data-copy]").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var code = btn.parentElement.querySelector("code").innerText;
+    var done = function () {
+      var old = btn.textContent;
+      btn.textContent = "已复制";
+      setTimeout(function () { btn.textContent = old; }, 1500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(code).then(done, done);
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = code; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(ta); done();
+    }
+  });
+});
+</script>
+
+</body>
+</html>
