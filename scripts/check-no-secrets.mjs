@@ -11,7 +11,7 @@ import { fileURLToPath } from "node:url";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SELF = path.relative(ROOT, fileURLToPath(import.meta.url));
 const SKIP_DIRS = new Set([".git", "node_modules", "dist", "coverage"]);
-const TEXT_EXT = new Set([".mjs", ".js", ".cjs", ".json", ".md", ".txt", ".yml", ".yaml", ".sh", ".plist", ".example", ""]);
+const TEXT_EXT = new Set([".mjs", ".js", ".cjs", ".json", ".md", ".txt", ".yml", ".yaml", ".sh", ".plist", ".html", ".htm", ".css", ".example", ""]);
 
 const RULES = [
   { name: "base64-32byte-key", re: /(?<![A-Za-z0-9+/])[A-Za-z0-9+/]{43}=(?![A-Za-z0-9+/])/ },
