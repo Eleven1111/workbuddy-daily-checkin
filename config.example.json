@@ -1,0 +1,14 @@
+{
+  "_comment": "示例配置。所有项都有默认值，通常无需配置。不要把任何真实密钥写进文件，也不要提交本文件的副本。没有原生模块可用时，可通过 WB_ATREST_SECRET_B64 环境变量或 WB_SECRET_FILE 指向的 0600 文件自备密钥。",
+
+  "WB_ELECTRON_BIN": "/Applications/WorkBuddy.app/Contents/MacOS/Electron",
+  "WB_AUTH_FILE": "~/Library/Application Support/CodeBuddyExtension/Data/Public/auth/workbuddy-desktop.info",
+  "WB_KEYBLOB_FILE": "~/.workbuddy/keyblob",
+  "WB_LOG_FILE": "~/.workbuddy/logs/daily-checkin.log",
+  "WB_LOCK_FILE": "~/.workbuddy/logs/daily-checkin.lock",
+  "WB_SECRET_FILE": "~/.config/workbuddy-checkin/atrest-secret",
+  "WB_API_BASE": "",
+  "WB_TIMEOUT_MS": 20000,
+  "WB_RETRIES": 2,
+  "WB_ATREST_SECRET_B64": "<仅在你自己机器的环境中设置，绝不写入仓库>"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "workbuddy-daily-checkin",
+  "version": "1.1.0",
+  "description": "Zero-dependency daily check-in CLI for WorkBuddy Buddy 加油站 (credits), with at-rest credential decryption, redacted ledger, idempotent scheduling and self-diagnostics.",
+  "type": "module",
+  "main": "src/checkin.mjs",
+  "bin": {
+    "wb-checkin": "src/checkin.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "checkin": "node src/checkin.mjs",
+    "check": "node src/checkin.mjs --check-only --json",
+    "doctor": "node src/checkin.mjs --doctor",
+    "history": "node src/checkin.mjs --history=30",
+    "test": "node --test test/*.test.mjs",
+    "lint": "node --check src/checkin.mjs && node --check scripts/check-no-secrets.mjs",
+    "audit:secrets": "node scripts/check-no-secrets.mjs",
+    "verify": "npm run lint && npm test && npm run audit:secrets"
+  },
+  "keywords": [
+    "workbuddy",
+    "checkin",
+    "automation",
+    "cli",
+    "zero-dependency"
+  ],
+  "author": "Eleven1111",
+  "license": "MIT",
+  "private": false,
+  "files": [
+    "src/",
+    "scripts/",
+    "deploy/",
+    "skill/",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "config.example.json"
+  ]
+}
