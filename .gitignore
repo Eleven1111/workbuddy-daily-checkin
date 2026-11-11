@@ -1,0 +1,24 @@
+# 本机运行产物 / 凭据 —— 一律不入库
+.env
+.env.*
+*.pem
+*.p12
+*.key
+*.lock
+*.bak
+*.tmp-*
+atrest-secret
+secret*
+credentials*
+auth/
+
+# 日志与台账（可能含历史版本的个人信息）
+*.log
+logs/
+
+# 依赖与系统
+node_modules/
+.DS_Store
+.idea/
+.vscode/
+npm-debug.log*
